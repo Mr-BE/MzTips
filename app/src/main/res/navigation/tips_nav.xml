@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="dev.mrbe.mztips.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_tipsFragment"
+            app:destination="@id/tipsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tipsFragment"
         android:name="dev.mrbe.mztips.TipsFragment"
