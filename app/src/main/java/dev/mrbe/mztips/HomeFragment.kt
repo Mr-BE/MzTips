@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        //set nav for odds button
+        //set nav for Odds button
         binding.buttonDailyOdds.setOnClickListener {
             this.findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToTipsFragment()

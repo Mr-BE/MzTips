@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class odds(
-    var date: Date = Date(),
+data class Odds(
+    var date: String = "",
     var oddsTip: String = ""
 ): Parcelable
