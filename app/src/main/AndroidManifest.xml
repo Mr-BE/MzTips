@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MzTips">
         <activity
+            android:name=".PreviousOddsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_previous_odds"
+            android:theme="@style/Theme.MzTips.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -18,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9609622443191306~5713073719" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -18,6 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.gms.ads.AdRequest
 import dev.mrbe.mztips.data.*
 import dev.mrbe.mztips.databinding.FragmentTipsBinding
 import dev.mrbe.mztips.models.Odds
@@ -50,6 +52,15 @@ class TipsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentTipsBinding.inflate(inflater, container, false)
 
+        //ads
+        val topAdsView =  binding.tipsTopAds
+        val bottomAdsView = binding.tipsBottomAds
+
+        val adRequest = AdRequest.Builder()
+            .build()
+
+        topAdsView.loadAd(adRequest)
+        bottomAdsView.loadAd(adRequest)
         //compose section
         binding.composeView.apply {
             //dispose the composition when the view's lifecycle owner is destroyed
@@ -64,6 +75,9 @@ class TipsFragment : Fragment() {
         return binding.root
 
     }
+
+
+
 
 
 @Composable

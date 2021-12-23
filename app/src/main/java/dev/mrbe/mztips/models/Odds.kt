@@ -7,5 +7,6 @@ import java.util.*
 @Parcelize
 data class Odds(
     var date: String = "",
-    var oddsTip: String = ""
+    var oddsTip: String = "",
+    var oddsResult: Int = -1
 ): Parcelable

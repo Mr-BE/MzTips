@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_homeFragment_to_tipsFragment"
             app:destination="@id/tipsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_prviousOddsFragment"
+            app:destination="@id/prviousOddsFragment" />
     </fragment>
     <fragment
         android:id="@+id/tipsFragment"
         android:name="dev.mrbe.mztips.TipsFragment"
         android:label="fragment_tips"
         tools:layout="@layout/fragment_tips" />
+    <fragment
+        android:id="@+id/prviousOddsFragment"
+        android:name="dev.mrbe.mztips.PreviousOddsFragment"
+        android:label="fragment_prvious_odds"
+        tools:layout="@layout/fragment_prvious_tips" />
 </navigation>

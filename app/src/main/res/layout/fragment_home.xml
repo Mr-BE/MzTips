@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,6 +12,16 @@
         tools:context=".HomeFragment">
 
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/home_top_ads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-9609622443191306/9081473088"/>
         <Button
             android:id="@+id/button_daily_odds"
             style="@style/button_style"
@@ -21,9 +32,8 @@
             android:layout_marginEnd="32dp"
             android:text="@string/daily_odds_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/home_top_ads" />
 
         <Button
             android:id="@+id/button_previous_odds"
@@ -33,10 +43,20 @@
             android:layout_marginBottom="@dimen/space_xl"
             android:background="@drawable/button_background"
             android:text="@string/button_previous_odds"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/home_bottom_ads"
             app:layout_constraintEnd_toEndOf="@+id/button_daily_odds"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/button_daily_odds" />
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/home_bottom_ads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-9609622443191306/9081473088"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

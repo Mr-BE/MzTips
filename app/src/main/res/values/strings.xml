@@ -5,4 +5,5 @@
     <string name="header_title">Welcome To MZTips</string>
     <string name="daily_odds_text">Daily 2 Odds</string>
     <string name="button_previous_odds">Previous Odds</string>
+    <string name="title_activity_previous_odds">PreviousOddsActivity</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
 import dev.mrbe.mztips.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -23,10 +24,25 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        //ads
+      val topAdsView =  binding.homeTopAds
+        val bottomAdsView = binding.homeBottomAds
+
+        val adRequest = AdRequest.Builder()
+            .build()
+
+        topAdsView.loadAd(adRequest)
+        bottomAdsView.loadAd(adRequest)
         //set nav for Odds button
         binding.buttonDailyOdds.setOnClickListener {
             this.findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToTipsFragment()
+            )
+        }
+        //set nav for previous odds button
+        binding.buttonPreviousOdds.setOnClickListener {
+            this.findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToPrviousOddsFragment()
             )
         }
         return  binding.root

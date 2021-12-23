@@ -3,8 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-   <androidx.compose.ui.platform.ComposeView
-       android:id="@+id/compose_view"
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/tips_constraint"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent">
+
+      <com.google.android.gms.ads.AdView
+          android:id="@+id/tips_top_ads"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:adSize="BANNER"
+          app:adUnitId="ca-app-pub-9609622443191306/9081473088"/>
+
+
+      <androidx.compose.ui.platform.ComposeView
+          android:id="@+id/compose_view"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tips_top_ads"
+          app:layout_constraintBottom_toTopOf="@id/tips_bottom_ads"/>
+
+      <com.google.android.gms.ads.AdView
+          android:id="@+id/tips_bottom_ads"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="8dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:adSize="BANNER"
+          app:adUnitId="ca-app-pub-9609622443191306/9081473088"/>
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>
