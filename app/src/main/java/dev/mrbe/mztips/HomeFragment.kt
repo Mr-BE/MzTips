@@ -1,31 +1,25 @@
 package dev.mrbe.mztips
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import dev.mrbe.mztips.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-   private lateinit var binding: FragmentHomeBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        //ads
-      val topAdsView =  binding.homeTopAds
+        val topAdsView = binding.homeTopAds
         val bottomAdsView = binding.homeBottomAds
 
         val adRequest = AdRequest.Builder()
@@ -33,6 +27,7 @@ class HomeFragment : Fragment() {
 
         topAdsView.loadAd(adRequest)
         bottomAdsView.loadAd(adRequest)
+
         //set nav for Odds button
         binding.buttonDailyOdds.setOnClickListener {
             this.findNavController().navigate(
@@ -45,8 +40,6 @@ class HomeFragment : Fragment() {
                 HomeFragmentDirections.actionHomeFragmentToPrviousOddsFragment()
             )
         }
-        return  binding.root
+        return binding.root
     }
-
-
 }

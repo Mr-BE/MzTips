@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class OddsViewModel (val oddsRepo: OddsRepo):ViewModel() {
+class OddsViewModel(val oddsRepo: OddsRepo) : ViewModel() {
 
     val oddsStateFlow = MutableStateFlow<TipsResponse?>(null)
 
@@ -20,6 +20,7 @@ class OddsViewModel (val oddsRepo: OddsRepo):ViewModel() {
         }
     }
 }
+
 class OddsViewModelFactory(private val oddsRepo: OddsRepo) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

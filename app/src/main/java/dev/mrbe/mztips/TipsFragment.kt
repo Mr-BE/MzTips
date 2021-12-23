@@ -1,7 +1,7 @@
 package dev.mrbe.mztips
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,9 +25,9 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.ads.AdRequest
 import dev.mrbe.mztips.data.*
@@ -38,22 +37,17 @@ import kotlinx.coroutines.flow.asStateFlow
 
 
 class TipsFragment : Fragment() {
-  private lateinit var binding: FragmentTipsBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var binding: FragmentTipsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentTipsBinding.inflate(inflater, container, false)
 
         //ads
-        val topAdsView =  binding.tipsTopAds
+        val topAdsView = binding.tipsTopAds
         val bottomAdsView = binding.tipsBottomAds
 
         val adRequest = AdRequest.Builder()
@@ -61,6 +55,7 @@ class TipsFragment : Fragment() {
 
         topAdsView.loadAd(adRequest)
         bottomAdsView.loadAd(adRequest)
+
         //compose section
         binding.composeView.apply {
             //dispose the composition when the view's lifecycle owner is destroyed
@@ -77,102 +72,111 @@ class TipsFragment : Fragment() {
     }
 
 
+    @Composable
+    private fun OddsList(
 
-
-
-@Composable
-private fun OddsList(
-
-    oddsViewModel: OddsViewModel = viewModel(modelClass = OddsViewModel::class.java,
-        this, factory = OddsViewModelFactory(OddsRepo()))
+        oddsViewModel: OddsViewModel = viewModel(
+            modelClass = OddsViewModel::class.java,
+            this, factory = OddsViewModelFactory(OddsRepo())
+        )
     ) {
-    val arimoFont = Font(R.font.arimo)
-    val textBackgroundColor = Color(R.color.orange_500)
-    when (val oddsList = oddsViewModel
-        .oddsStateFlow.asStateFlow().collectAsState().value) {
+        val arimoFont = Font(R.font.arimo)
 
-        is OnError -> {
-            Text(text = "Error: Please try again later")
-        }
-        is OnSuccess -> {
-            val listOfOdds = oddsList.querySnapshot?.toObjects(Odds::class.java)
-            listOfOdds?.let {
-                //load list
-                LazyColumn{
-                    items(listOfOdds){ item: Odds? ->
+        //Handle fire store query responses
+        when (val oddsList = oddsViewModel
+            .oddsStateFlow.asStateFlow().collectAsState().value) {
 
-                        //Items
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                        ,
-                        shape = RoundedCornerShape(4.dp)
-                    )    {
-                        Row() {
+            is OnError -> {
+                Text(text = "Error: Please try again later")
+            }
+            is OnSuccess -> {
+                val listOfOdds = oddsList.querySnapshot?.toObjects(Odds::class.java)
+                listOfOdds?.let {
+                    //load list
+                    LazyColumn {
+                        items(listOfOdds) { item: Odds? ->
 
-                            Column(Modifier.fillMaxWidth()) {
+                            //Items
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                shape = RoundedCornerShape(4.dp)
+                            ) {
+                                Row {
 
-                                Row(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(0.dp, 8.dp, 0.dp, 0.dp)
+                                    Column(Modifier.fillMaxWidth()) {
 
-                                    .background(Color.Black), verticalAlignment = Alignment.CenterVertically
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(0.dp, 8.dp, 0.dp, 0.dp)
 
-                                ) {
-                                    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                                        item?.date.let { oddsDate ->
-                                            if (oddsDate != null) {
-                                                Text(text = oddsDate,
-                                                    style = TextStyle(fontStyle = arimoFont.style,
-                                                        fontSize = 14.sp, color = Color.White),
-                                                )
-                                            }
-                                        }
-                                    }
+                                                .background(Color.Black),
+                                            verticalAlignment = Alignment.CenterVertically
 
-                                }
-
-                                    Row(modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(0.dp, 2.dp, 0.dp, 8.dp)
-                                        .background(colorResource(id = R.color.text_background)), ) {
-                                        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-
-                                            item?.oddsTip.let { oddsTip ->
-                                                if (oddsTip != null) {
-                                                    Text(
-                                                        text = oddsTip,
-                                                        style = TextStyle(
-                                                            fontStyle = arimoFont.style,
-                                                            fontSize = 20.sp, color = Color.Black
+                                        ) {
+                                            Column(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ) {
+                                                item?.date.let { oddsDate ->
+                                                    if (oddsDate != null) {
+                                                        Text(
+                                                            text = oddsDate,
+                                                            style = TextStyle(
+                                                                fontStyle = arimoFont.style,
+                                                                fontSize = 14.sp,
+                                                                color = Color.White
+                                                            ),
                                                         )
-                                                    )
+                                                    }
+                                                }
+                                            }
+
+                                        }
+
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(0.dp, 2.dp, 0.dp, 8.dp)
+                                                .background(colorResource(id = R.color.text_background)),
+                                        ) {
+                                            Column(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ) {
+
+                                                item?.oddsTip.let { oddsTip ->
+                                                    if (oddsTip != null) {
+                                                        Text(
+                                                            text = oddsTip,
+                                                            style = TextStyle(
+                                                                fontStyle = arimoFont.style,
+                                                                fontSize = 20.sp,
+                                                                color = Color.Black
+                                                            )
+                                                        )
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
 
+
+                                    }
+                                }
 
 
                             }
+
                         }
-
-
-                    }
-
                     }
                 }
             }
+            else -> {
+                Log.wtf("Tips Fragment", "wtf happened")
+            }
         }
-    }
 
-}
-    @Preview
-    @Composable
-    fun Preview(){
-        MaterialTheme {
-            OddsList()
-        }
     }
 
 }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.callbackFlow
 
 sealed class TipsResponse
 data class OnSuccess(val querySnapshot: QuerySnapshot?) : TipsResponse()
-data class OnError(val exception: FirebaseFirestoreException?): TipsResponse()
+data class OnError(val exception: FirebaseFirestoreException?) : TipsResponse()
 
 
 class OddsRepo {
@@ -18,13 +18,13 @@ class OddsRepo {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getTips() = callbackFlow {
-        val  collection = firestore.collection("newodds")
+        val collection = firestore.collection("tips")
 
-        val snapshotListener = collection.addSnapshotListener{ value, error ->
+        val snapshotListener = collection.addSnapshotListener { value, error ->
             val response = if (error == null) {
                 Log.d(
                     "Tag",
-                    "Response is not error. No of documents received is -> ${value?.documents}"
+                    "Response is not error. No of documents received is -> ${value?.size()}"
                 )
                 OnSuccess(value)
             } else {
