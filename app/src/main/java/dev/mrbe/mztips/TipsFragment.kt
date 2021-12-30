@@ -96,78 +96,79 @@ class TipsFragment : Fragment() {
                     LazyColumn {
                         items(listOfOdds) { item: Odds? ->
 
-                            //Items
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                shape = RoundedCornerShape(4.dp)
-                            ) {
-                                Row {
+                            if (item?.oddsResult == -1) {
+                                //Items
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    shape = RoundedCornerShape(4.dp)
+                                ) {
+                                    Row {
 
-                                    Column(Modifier.fillMaxWidth()) {
+                                        Column(Modifier.fillMaxWidth()) {
 
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(0.dp, 8.dp, 0.dp, 0.dp)
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(0.dp, 8.dp, 0.dp, 0.dp)
 
-                                                .background(Color.Black),
-                                            verticalAlignment = Alignment.CenterVertically
+                                                    .background(Color.Black),
+                                                verticalAlignment = Alignment.CenterVertically
 
-                                        ) {
-                                            Column(
-                                                modifier = Modifier.fillMaxWidth(),
-                                                horizontalAlignment = Alignment.CenterHorizontally
                                             ) {
-                                                item?.date.let { oddsDate ->
-                                                    if (oddsDate != null) {
-                                                        Text(
-                                                            text = oddsDate,
-                                                            style = TextStyle(
-                                                                fontStyle = arimoFont.style,
-                                                                fontSize = 14.sp,
-                                                                color = Color.White
-                                                            ),
-                                                        )
-                                                    }
-                                                }
-                                            }
-
-                                        }
-
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(0.dp, 2.dp, 0.dp, 8.dp)
-                                                .background(colorResource(id = R.color.text_background)),
-                                        ) {
-                                            Column(
-                                                modifier = Modifier.fillMaxWidth(),
-                                                horizontalAlignment = Alignment.CenterHorizontally
-                                            ) {
-
-                                                item?.oddsTip.let { oddsTip ->
-                                                    if (oddsTip != null) {
-                                                        Text(
-                                                            text = oddsTip,
-                                                            style = TextStyle(
-                                                                fontStyle = arimoFont.style,
-                                                                fontSize = 20.sp,
-                                                                color = Color.Black
+                                                Column(
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    item?.date.let { oddsDate ->
+                                                        if (oddsDate != null) {
+                                                            Text(
+                                                                text = oddsDate,
+                                                                style = TextStyle(
+                                                                    fontStyle = arimoFont.style,
+                                                                    fontSize = 14.sp,
+                                                                    color = Color.White
+                                                                ),
                                                             )
-                                                        )
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(0.dp, 2.dp, 0.dp, 8.dp)
+                                                    .background(colorResource(id = R.color.text_background)),
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+
+                                                    item?.oddsTip.let { oddsTip ->
+                                                        if (oddsTip != null) {
+                                                            Text(
+                                                                text = oddsTip,
+                                                                style = TextStyle(
+                                                                    fontStyle = arimoFont.style,
+                                                                    fontSize = 20.sp,
+                                                                    color = Color.Black
+                                                                )
+                                                            )
+                                                        }
                                                     }
                                                 }
                                             }
+
+
                                         }
-
-
                                     }
+
+
                                 }
-
-
                             }
-
                         }
                     }
                 }

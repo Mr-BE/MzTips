@@ -9,11 +9,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MzTips">
-        <activity
-            android:name=".PreviousOddsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_previous_odds"
-            android:theme="@style/Theme.MzTips.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
