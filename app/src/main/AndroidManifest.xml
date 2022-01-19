@@ -9,7 +9,11 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MzTips">
-
+        <activity
+            android:name=".ComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/Theme.MzTips.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
