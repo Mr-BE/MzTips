@@ -18,9 +18,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import dev.mrbe.mztips.data.OddsRepo
+import dev.mrbe.mztips.data.OddsViewModel
+import dev.mrbe.mztips.data.OddsViewModelFactory
+import dev.mrbe.mztips.nav.NavRoutes
 import dev.mrbe.mztips.ui.theme.MzTipsTheme
 
 class ComposeActivity : ComponentActivity() {
@@ -30,20 +38,45 @@ class ComposeActivity : ComponentActivity() {
             MzTipsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+
+                    val oddsViewModel: OddsViewModel = viewModel(
+                        modelClass = OddsViewModel::class.java,
+                        this, factory = OddsViewModelFactory(OddsRepo())
+                    )
+
+                    //set navigator
+                    val navController = rememberNavController()
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = NavRoutes.HomePage.route
+                    ) {
+
+                        //home screen
+                        composable(NavRoutes.HomePage.route) {
+                            HomeScreenContent(navController)
+                        }
+
+                        //Daily odds screen
+                        composable(NavRoutes.DailyOdds.route) {
+                            TipsFragment().OddsList(oddsViewModel)
+                        }
+
+                        //Previous odds screen
+                        composable(NavRoutes.PreviousOdds.route) {
+                            PreviousOddsFragment().PreviousOddsList(oddsViewModel)
+                        }
+
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
 @Composable
-fun HomeScreenContent() {
+fun HomeScreenContent(navController: NavController) {
     val font = FontFamily(Font(R.font.poppins_semi_bold, FontWeight.SemiBold))
 //    val colourBackground = R.drawable.button_background
 
@@ -69,7 +102,7 @@ fun HomeScreenContent() {
                     val (topButton, bottomButton) = createRefs()
 
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(NavRoutes.DailyOdds.route) },
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -83,13 +116,13 @@ fun HomeScreenContent() {
                     ) {
                         Text(
                             text = stringResource(id = R.string.daily_odds_text),
-                            fontFamily = font, fontWeight = FontWeight.SemiBold
+
                         )
 
 
                     }
 
-                    Button(onClick = { /*TODO*/ },
+                    Button(onClick = { navController.navigate(NavRoutes.PreviousOdds.route) },
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -111,16 +144,11 @@ fun HomeScreenContent() {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TestPreview() {
-    HomeScreenContent()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun TestPreview() {
+//    HomeScreenContent(navController = )
+//}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MzTipsTheme {
-        Greeting("Android")
-    }
-}
+
+//}

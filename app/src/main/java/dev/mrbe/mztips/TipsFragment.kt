@@ -1,10 +1,7 @@
 package dev.mrbe.mztips
 
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,71 +11,67 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.gms.ads.AdRequest
-import dev.mrbe.mztips.data.*
-import dev.mrbe.mztips.databinding.FragmentTipsBinding
+import dev.mrbe.mztips.data.OddsViewModel
+import dev.mrbe.mztips.data.OnError
+import dev.mrbe.mztips.data.OnSuccess
 import dev.mrbe.mztips.models.Odds
 import kotlinx.coroutines.flow.asStateFlow
 
 
-class TipsFragment : Fragment() {
-    private lateinit var binding: FragmentTipsBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentTipsBinding.inflate(inflater, container, false)
-
-        //ads
-        val topAdsView = binding.tipsTopAds
-        val bottomAdsView = binding.tipsBottomAds
-
-        val adRequest = AdRequest.Builder()
-            .build()
-
-        topAdsView.loadAd(adRequest)
-        bottomAdsView.loadAd(adRequest)
-
-        //compose section
-        binding.composeView.apply {
-            //dispose the composition when the view's lifecycle owner is destroyed
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-
-            setContent {
-                MaterialTheme {
-                    OddsList()
-                }
-            }
-        }
-        return binding.root
-
-    }
+class TipsFragment : AppCompatActivity() {
+//    private lateinit var binding: FragmentTipsBinding
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        // Inflate the layout for this fragment
+//        binding = FragmentTipsBinding.inflate(inflater, container, false)
+//
+//        //ads
+//        val topAdsView = binding.tipsTopAds
+//        val bottomAdsView = binding.tipsBottomAds
+//
+//        val adRequest = AdRequest.Builder()
+//            .build()
+//
+//        topAdsView.loadAd(adRequest)
+//        bottomAdsView.loadAd(adRequest)
+//
+//        //compose section
+//        binding.composeView.apply {
+//            //dispose the composition when the view's lifecycle owner is destroyed
+//            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+//
+//            setContent {
+//                MaterialTheme {
+//                    OddsList()
+//                }
+//            }
+//        }
+//        return binding.root
+//
+//    }
 
 
     @Composable
-    private fun OddsList(
-
-        oddsViewModel: OddsViewModel = viewModel(
-            modelClass = OddsViewModel::class.java,
-            this, factory = OddsViewModelFactory(OddsRepo())
-        )
+    fun OddsList(
+        oddsViewModel: OddsViewModel
+//        oddsViewModel: OddsViewModel = viewModel(
+//            modelClass = OddsViewModel::class.java,
+//            this, factory = OddsViewModelFactory(OddsRepo())
+//        )
     ) {
         val arimoFont = Font(R.font.arimo)
 
