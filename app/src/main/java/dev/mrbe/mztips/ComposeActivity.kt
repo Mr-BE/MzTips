@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -114,10 +111,17 @@ fun HomeScreenContent(navController: NavController) {
 
                             },
                     ) {
-                        Text(
-                            text = stringResource(id = R.string.daily_odds_text),
+                        Row() {
+                            Icon(
+                                modifier = Modifier.padding(PaddingValues(0.dp, 0.dp, 8.dp, 0.dp)),
+                                painter = painterResource(id = R.drawable.ic_baseline_money_24),
+                                contentDescription = "money icon"
+                            )
+                            Text(
+                                text = stringResource(id = R.string.daily_odds_text)
+                            )
 
-                        )
+                        }
 
 
                     }
@@ -135,6 +139,11 @@ fun HomeScreenContent(navController: NavController) {
                                 end.linkTo(parent.end, margin = 16.dp)
 //                   top.linkTo(topButton.bottom, margin = 64.dp)
                             }) {
+                        Icon(
+                            modifier = Modifier.padding(PaddingValues(0.dp, 0.dp, 8.dp, 0.dp)),
+                            painter = painterResource(id = R.drawable.ic_baseline_360_24),
+                            contentDescription = "money icon"
+                        )
                         Text(text = stringResource(id = R.string.button_previous_odds))
 
                     }

@@ -18,7 +18,7 @@ class OddsRepo {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getTips() = callbackFlow {
-        val collection = firestore.collection("tips")
+        val collection = firestore.collection("odds")
 
         val snapshotListener = collection.addSnapshotListener { value, error ->
             val response = if (error == null) {

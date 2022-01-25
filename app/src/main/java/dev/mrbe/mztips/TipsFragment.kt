@@ -2,11 +2,9 @@ package dev.mrbe.mztips
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
@@ -84,12 +83,14 @@ class TipsFragment : AppCompatActivity() {
             }
             is OnSuccess -> {
                 val listOfOdds = oddsList.querySnapshot?.toObjects(Odds::class.java)
+
                 listOfOdds?.let {
+
                     //load list
                     LazyColumn {
                         items(listOfOdds) { item: Odds? ->
-
-                            if (item?.oddsResult == -1) {
+                            val isCurrentOdds = item?.oddsResult == -1
+                            if (isCurrentOdds) {
                                 //Items
                                 Card(
                                     modifier = Modifier
@@ -161,6 +162,15 @@ class TipsFragment : AppCompatActivity() {
 
 
                                 }
+                            } else {
+
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Image(
+                                        painter = painterResource(R.drawable.zero),
+                                        contentDescription = "zero content"
+                                    )
+                                }
+
                             }
                         }
                     }

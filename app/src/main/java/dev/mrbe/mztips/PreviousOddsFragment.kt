@@ -2,11 +2,9 @@ package dev.mrbe.mztips
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
@@ -68,11 +67,6 @@ class PreviousOddsFragment : AppCompatActivity() {
     @Composable
     fun PreviousOddsList(
         oddsViewModel: OddsViewModel
-
-//        oddsViewModel: OddsViewModel = viewModel(
-//            modelClass = OddsViewModel::class.java,
-//            this, factory = OddsViewModelFactory(OddsRepo())
-//        )
     ) {
         val poppinsFont = Font(R.font.poppins_semi_bold)
 
@@ -84,13 +78,15 @@ class PreviousOddsFragment : AppCompatActivity() {
             }
             is OnSuccess -> {
                 val listOfOdds = oddsList.querySnapshot?.toObjects(Odds::class.java)
+
                 listOfOdds?.let {
                     //load list
                     LazyColumn {
                         items(listOfOdds) { item: Odds? ->
+                            val isPrevious: Boolean = item?.oddsResult != -1
 
                             //ensure result has been updated
-                            if (item?.oddsResult != -1) {
+                            if (isPrevious) {
                                 //Items
                                 Card(
                                     modifier = Modifier
@@ -174,6 +170,13 @@ class PreviousOddsFragment : AppCompatActivity() {
                                     }
 
 
+                                }
+                            } else {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Image(
+                                        painter = painterResource(R.drawable.zero),
+                                        contentDescription = "no content image"
+                                    )
                                 }
                             }
 
