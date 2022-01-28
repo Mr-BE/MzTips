@@ -56,7 +56,9 @@ class ComposeActivity : ComponentActivity() {
 
                         //Daily odds screen
                         composable(NavRoutes.DailyOdds.route) {
-                            TipsFragment().OddsList(oddsViewModel)
+                            TipsFragment().OddsList(
+                                oddsViewModel
+                            )
                         }
 
                         //Previous odds screen

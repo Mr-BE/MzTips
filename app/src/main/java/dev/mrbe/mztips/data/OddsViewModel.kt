@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 
 class OddsViewModel(val oddsRepo: OddsRepo) : ViewModel() {
 
+
     val oddsStateFlow = MutableStateFlow<TipsResponse?>(null)
 
     init {
@@ -21,6 +22,7 @@ class OddsViewModel(val oddsRepo: OddsRepo) : ViewModel() {
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 class OddsViewModelFactory(private val oddsRepo: OddsRepo) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
