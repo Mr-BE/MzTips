@@ -19,11 +19,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mrbe.mztips.data.OddsViewModel
 import dev.mrbe.mztips.data.OnError
 import dev.mrbe.mztips.data.OnSuccess
+import dev.mrbe.mztips.models.FilterValues
 import dev.mrbe.mztips.models.Odds
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -67,7 +69,7 @@ class TipsFragment() : AppCompatActivity() {
             Surface(modifier = Modifier.padding(8.dp)) {
 
                 if (showDialog) {
-                    ShowFilterDialog { showDialog = false }
+                    ShowFilterDialog(oddsViewModel) { showDialog = false }
                 }
 
                 val arimoFont = Font(R.font.arimo)
@@ -184,38 +186,38 @@ class TipsFragment() : AppCompatActivity() {
     }
 
     @Composable
-    fun ShowFilterDialog(onClickOut: () -> Unit) {
+    fun ShowFilterDialog(oddsViewModel: OddsViewModel, onClickOut: () -> Unit) {
         Log.d("myTAG", "Inside Dialog")
 
         AlertDialog(
             onDismissRequest = onClickOut,
 
-            title = { Text(text = "Filter Odds") },
+            title = { Text(text = "Filter Odds", fontWeight = FontWeight.SemiBold) },
             text = {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.Start
                 ) {
                     //create params
-                    val filterParams = arrayListOf<String>(
-                        "Premier League",
-                        "La Liga", "Seria A", "Ligue 1", "Rest of World"
-                    )
+                    val filterParams = oddsViewModel.filterList
 
-                    filterParams.forEach { option: String ->
+                    filterParams.forEach { option: FilterValues ->
                         Spacer(modifier = Modifier.size(16.dp))
 
                         Row {
                             var isChecked by rememberSaveable {
-                                mutableStateOf(false)
+                                mutableStateOf(option.isSelected)
                             }
 
                             Checkbox(checked = isChecked,
-                                onCheckedChange = { isChecked = it })
+                                onCheckedChange = {
+                                    isChecked = it
+                                    option.isSelected = it
+                                })
 
-                            Spacer(modifier = Modifier.size(16.dp))
-                            Text(text = option)
+//                            Spacer(modifier = Modifier.size(16.dp))
+                            Text(text = option.name)
                         }
                     }
 
