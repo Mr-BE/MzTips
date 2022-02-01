@@ -3,6 +3,7 @@ package dev.mrbe.mztips.data
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -17,10 +18,34 @@ class OddsRepo {
     private val firestore = FirebaseFirestore.getInstance()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getTips() = callbackFlow {
-        val collection = firestore.collection("odds")
+    fun getTips(filterParams: List<String?>) = callbackFlow {
+        val db = firestore.collection("odds")
 
-        val snapshotListener = collection.addSnapshotListener { value, error ->
+        var collection: Query? = null
+
+        if (filterParams.isNotEmpty()) {
+//            collection = if (filterParams.contains("all")) {
+//                db
+//            } else{
+//                filterParams.forEach{ filterString ->
+//                    db.whereEqualTo("tournament", filterString)
+//                }
+//                for (i in filterParams) {
+//                    db.whereEqualTo("tournament", i)
+//                }
+//
+//            }
+            if (filterParams.contains("all")) {
+                filterParams.forEach { filterString ->
+                    collection = db.whereEqualTo("tournament", filterString)
+                }
+            } else {
+                collection = db
+            }
+        }
+
+
+        val snapshotListener = collection?.addSnapshotListener { value, error ->
             val response = if (error == null) {
                 Log.d(
                     "Tag",
@@ -34,6 +59,6 @@ class OddsRepo {
 
             trySend(response)
         }
-        awaitClose { snapshotListener.remove() }
+        awaitClose { snapshotListener?.remove() }
     }
 }

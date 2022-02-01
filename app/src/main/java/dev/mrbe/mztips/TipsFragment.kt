@@ -2,7 +2,6 @@ package dev.mrbe.mztips
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -162,16 +161,17 @@ class TipsFragment() : AppCompatActivity() {
 
 
                                         }
-                                    } else {
-
-                                        Box(modifier = Modifier.fillMaxSize()) {
-                                            Image(
-                                                painter = painterResource(R.drawable.zero),
-                                                contentDescription = "zero content"
-                                            )
-                                        }
-
                                     }
+//                                    else {
+//
+//                                        Box(modifier = Modifier.fillMaxSize()) {
+//                                            Image(
+//                                                painter = painterResource(R.drawable.zero),
+//                                                contentDescription = "zero content"
+//                                            )
+//                                        }
+//
+//                                    }
                                 }
                             }
                         }
@@ -202,6 +202,8 @@ class TipsFragment() : AppCompatActivity() {
                     //create params
                     val filterParams = oddsViewModel.filterList
 
+
+
                     filterParams.forEach { option: FilterValues ->
                         Spacer(modifier = Modifier.size(16.dp))
 
@@ -214,6 +216,8 @@ class TipsFragment() : AppCompatActivity() {
                                 onCheckedChange = {
                                     isChecked = it
                                     option.isSelected = it
+//                                    oddsViewModel.otherLoading(option.name)
+                                    oddsViewModel.getFilterParamsAndLoadData(listOf(option.name))
                                 })
 
 //                            Spacer(modifier = Modifier.size(16.dp))
